@@ -98,15 +98,15 @@ function banUser(id) {
                             {{ dayjs(user.updated_at).fromNow() }}
                         </td>
                         <td class="py-4">
-                            <span v-if="user.ban" class="text-white font-bold px-3 py-1 rounded-xl bg-danger">Banned</span>
+                            <span v-if="user.is_banned" class="text-white font-bold px-3 py-1 rounded-xl bg-danger">Banned</span>
                             <span v-else class="text-white font-bold px-3 py-1 rounded-xl bg-success">Active</span>
                         </td>
                         <td class="py-4 space-y-2 lg:space-y-0 lg:space-x-2 flex flex-col lg:flex-row">
                             <a href="#" class="font-semibold text-white text-center px-4 py-1.5 bg-azure-800 border-2 border-azure-800 rounded-xl">Edit</a>
-                            <button type="button" v-if="!user.ban" @click="openModal(user, user.ban)" class="font-bold text-danger px-4 py-1.5 border-2 border-transparent rounded-xl focus-visible:ring-offset-0">
+                            <button type="button" v-if="!user.ban" @click="openModal(user, user.is_banned)" class="font-bold text-danger px-4 py-1.5 border-2 border-transparent rounded-xl focus-visible:ring-offset-0">
                                 Ban
                             </button>
-                            <button type="button" v-else @click="openModal(user, user.ban)" class="font-bold text-success px-4 py-1.5 border-2 border-transparent rounded-xl focus-visible:ring-offset-0">
+                            <button type="button" v-else @click="openModal(user, user.is_banned)" class="font-bold text-success px-4 py-1.5 border-2 border-transparent rounded-xl focus-visible:ring-offset-0">
                                 Unban
                             </button>
                             <TransitionRoot appear :show="isSuccessOpen" as="template" v-bind:user="user">
@@ -138,7 +138,7 @@ function banUser(id) {
                                                         <svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto checkmark">
                                                             <path class="checkmark__check" stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                                         </svg>
-                                                        <DialogTitle as="h3" class="text-xl font-bold leading-6 text-gray-900 text-center mt-2" v-if="!id.ban">
+                                                        <DialogTitle as="h3" class="text-xl font-bold leading-6 text-gray-900 text-center mt-2" v-if="!id.is_banned">
                                                             User banned successfully
                                                         </DialogTitle>
                                                         <DialogTitle as="h3" class="text-xl font-bold leading-6 text-gray-900 text-center mt-2" v-else>
