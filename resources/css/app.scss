@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/*!! ClickNToulon v0.1.0 | MIT License | https://clickntoulon.fr */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Nunito', sans-serif !important;
+}
+
+a:any-link {
+    text-decoration: none !important;
+}
+
+button {
+    outline: none !important;
+}
+
+.w-inherit {
+    width: inherit;
+}
+
+.checkmark {
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    animation: scale .1s ease-in-out .4s both;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    fill: #FFF;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.3s forwards;
+
+    @apply stroke-success;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes scale {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
