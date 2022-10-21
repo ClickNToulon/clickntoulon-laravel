@@ -38,4 +38,8 @@ Route::resource('/admin/users', UserController::class)
     ->only(['index', 'store', 'destroy'])
     ->middleware(['auth', 'verified']);
 
+Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
+    ->name('users.ban')
+    ->middleware(['auth', 'verified']);
+
 require __DIR__.'/auth.php';
