@@ -20,17 +20,10 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    if (Auth::user()) {
-        return Inertia::render('Welcome', [
-            'roles' => Auth::user()->roles,
-            'canLogin' => Route::has('login'),
-        ]);
-    } else {
-        return Inertia::render('Welcome', [
-            'roles' => [],
-            'canLogin' => Route::has('login'),
-        ]);
-    }
+    return Inertia::render('Welcome', [
+        'roles' => Auth::user() ? Auth::user()->roles->pluck('name') : [],
+        'canLogin' => Route::has('login'),
+    ]);
 });
 
 Route::get('/admin', function () {

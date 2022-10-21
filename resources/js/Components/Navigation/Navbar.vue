@@ -163,7 +163,7 @@ const props = defineProps(['roles']);
 let admin = null;
 
 props.roles.filter(role => {
-    if (role.name === 'Administrateur') {
+    if (role === 'Administrateur' || role === 'Modérateur') {
         admin = role;
     }
 });
