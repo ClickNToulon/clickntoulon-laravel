@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -19,16 +20,21 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    if (Auth::user()) {
+        return Inertia::render('Welcome', [
+            'roles' => Auth::user()->roles,
+            'canLogin' => Route::has('login'),
+        ]);
+    } else {
+        return Inertia::render('Welcome', [
+            'roles' => [],
+            'canLogin' => Route::has('login'),
+        ]);
+    }
 });
 
 Route::get('/admin', function () {
-    return Inertia::render('Test', [
+    return Inertia::render('Admin', [
         'avatar' => Auth::user()->avatar,
         'users' => User::all()
     ]);

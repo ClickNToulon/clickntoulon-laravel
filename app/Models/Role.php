@@ -35,12 +35,12 @@ class Role extends Model
     ];
 
     /**
-     * Returns the users that has this role.
+     * Returns the users that have this role.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
 }
