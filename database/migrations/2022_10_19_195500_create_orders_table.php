@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('isBasket')->default(true);
             $table->integer('quantity')->toArray();
             $table->float('total', 8, 2, true);
+            $table->foreignId('status_id')->constrained('statuses');
             $table->timestamps();
         });
     }

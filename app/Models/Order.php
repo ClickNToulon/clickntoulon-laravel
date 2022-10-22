@@ -55,8 +55,8 @@ class Order extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function status(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->belongsTo(Status::class);
+        return $this->hasOne(Status::class);
     }
 }
