@@ -6,8 +6,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "Proxima Soft";
+    font-weight: 400;
+    src: url('../fonts/ProximaSoft-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Proxima Soft";
+    font-weight: 500;
+    src: url('../fonts/ProximaSoft-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Proxima Soft";
+    font-weight: 600;
+    src: url('../fonts/ProximaSoft-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Proxima Soft";
+    font-weight: 700;
+    src: url('../fonts/ProximaSoft-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Proxima Soft";
+    font-weight: 800;
+    src: url('../fonts/ProximaSoft-ExtraBold.woff') format('woff');
+}
+
 * {
-    font-family: 'Nunito', sans-serif !important;
+    font-family: "Proxima Soft", sans-serif !important;
+    text-size-adjust: 100%;
 }
 
 a:any-link {
