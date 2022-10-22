@@ -44,7 +44,7 @@ function banUser(id) {
             onSuccess: () => {
                 loading.value = false;
                 disabled.value = false;
-                openSuccessModal();
+                isSuccessOpen.value = true;
                 closeModal();
             },
         });
