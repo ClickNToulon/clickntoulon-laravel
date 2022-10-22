@@ -44,7 +44,7 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Order::class);
     }
@@ -54,9 +54,9 @@ class Product extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function price(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function price(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(ProductPrice::class);
+        return $this->belongsToMany(ProductPrice::class);
     }
 
     /**
