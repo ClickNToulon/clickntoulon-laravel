@@ -52,7 +52,7 @@ class Product extends Model
     /**
      * Returns the price of this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function price(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
