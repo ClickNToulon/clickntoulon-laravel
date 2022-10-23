@@ -53,7 +53,7 @@ class Order extends Model
     /**
      * Returns the status of this order
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function status(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
