@@ -29,7 +29,7 @@ Route::get('/', function () {
         'shops' => Shop::where('isVerified', true)->get(),
         'products' => Product::with('productType', 'price')->latest()->get(),
     ]);
-});
+})->name('home');
 
 Route::get('/admin', function () {
     return Inertia::render('Admin', [

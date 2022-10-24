@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/inertia-vue3';
 
 <template>
     <!-- Hero -->
-    <section class="mx-auto lg:container h-[400px] lg:h-[700px] px-4 sm:px-6 lg:px-8 h-full mb-16 lg:pb-0">
+    <section class="mx-auto lg:container h-[400px] lg:h-[700px] px-4 sm:px-6 lg:px-8 h-full">
         <div class="flex flex-col lg:flex-row items-center h-full gap-y-10 lg:gap-y-0 lg:gap-x-20">
             <div class="w-full h-full flex items-center">
                 <div class="flex flex-col space-y-10 w-full max-w-2xl z-50">
