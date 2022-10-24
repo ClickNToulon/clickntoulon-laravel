@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use App\Models\Role;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +26,8 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'roles' => Auth::user() ? Auth::user()->roles->pluck('name') : [],
         'canLogin' => Route::has('login'),
+        'shops' => Shop::where('isVerified', true)->get(),
+        'products' => Product::with('productType', 'price')->latest()->get(),
     ]);
 });
 
