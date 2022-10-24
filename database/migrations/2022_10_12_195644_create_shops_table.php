@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('phone', false, true)->nullable();
             $table->string('email', 255);
             $table->text('image');
+            $table->text('description');
             $table->boolean('isBanned')->default(false);
             $table->boolean('isVerified')->default(false);
             $table->timestamps();
