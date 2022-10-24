@@ -2,6 +2,7 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import Navbar from '@/Components/Navigation/Navbar.vue';
 import HeroSection from '@/Components/HeroSection.vue';
+import Footer from '@/Components/Footer.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -14,9 +15,7 @@ defineProps({
 <template>
     <Head title="Welcome"><title>Welcome</title></Head>
     <Navbar :roles="roles"/>
-    <!-- Hero Section -->
     <HeroSection />
-    <!-- End Hero Section -->
     <section class="lg:container mx-auto px-4 sm:px-6 lg:px-8 pb-32">
         <div class="flex flex-col items-center space-y-10">
             <h2 class="text-4xl font-semibold text-center text-slate-900">
@@ -49,7 +48,7 @@ defineProps({
             </div>
         </div>
     </section>
-    <section class="lg:container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <section class="lg:container mx-auto px-4 sm:px-6 lg:px-8 pb-32">
         <div class="flex flex-col items-center space-y-10">
             <h2 class="text-4xl font-semibold text-center text-slate-900">
                 Les derniers produits ajoutés
@@ -90,4 +89,5 @@ defineProps({
             </div>
         </div>
     </section>
+    <Footer/>
 </template>
