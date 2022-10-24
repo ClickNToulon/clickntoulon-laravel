@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Role;
 use App\Models\User;
@@ -40,5 +41,8 @@ Route::resource('/admin/users', UserController::class)
 Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
     ->name('users.ban')
     ->middleware(['auth', 'verified']);
+
+Route::resource('/products', ProductController::class)
+    ->only(['index', 'show']);
 
 require __DIR__.'/auth.php';
