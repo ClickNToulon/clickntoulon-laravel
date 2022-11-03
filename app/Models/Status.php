@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Defines a Role Model. A role define the users permissions.
+ * Defines a Status model. A status define an order state.
  *
  * @author Corentin Thibaud <corentin.thibaud@clickntoulon.fr>
  * @author Quentin Boitel <quentin.boitel@clickntoulon.fr>
@@ -14,13 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $users
+ * @property \Illuminate\Database\Eloquent\Collection|null $orders
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Role extends Model
+class Status extends Model
 {
     use HasFactory;
 
@@ -30,17 +30,16 @@ class Role extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'name',
+        'name'
     ];
 
     /**
-     * Returns the users that have this role.
+     * Returns the orders that has this status.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Order::class);
     }
 }
