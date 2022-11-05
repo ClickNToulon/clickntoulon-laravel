@@ -13,10 +13,8 @@ class CreatePaymentShopPivotTable extends Migration
     public function up()
     {
         Schema::create('payment_shop', function (Blueprint $table) {
-            $table->unsignedBigInteger('payment_id')->index();
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
-            $table->unsignedBigInteger('shop_id')->index();
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
+            $table->foreignId('payment_id')->constrained('payments')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->onDelete('cascade');
             $table->primary(['payment_id', 'shop_id']);
         });
     }
