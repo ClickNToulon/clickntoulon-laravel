@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
+use App\Models\Role;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -20,15 +24,15 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
+        'roles' => Auth::user() ? Auth::user()->roles->pluck('name') : [],
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'shops' => Shop::where('isVerified', true)->get(),
+        'products' => Product::with('productType', 'price')->latest()->get(),
     ]);
-});
+})->name('home');
 
 Route::get('/admin', function () {
-    return Inertia::render('Test', [
+    return Inertia::render('Admin', [
         'avatar' => Auth::user()->avatar,
         'users' => User::all()
     ]);
@@ -41,5 +45,8 @@ Route::resource('/admin/users', UserController::class)
 Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
     ->name('users.ban')
     ->middleware(['auth', 'verified']);
+
+Route::resource('/products', ProductController::class)
+    ->only(['index', 'show']);
 
 require __DIR__.'/auth.php';

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Defines a Role Model. A role define the users permissions.
+ * Defines a Payment Model. A Payment instance is a payment made by a User.
  *
  * @author Corentin Thibaud <corentin.thibaud@clickntoulon.fr>
  * @author Quentin Boitel <quentin.boitel@clickntoulon.fr>
@@ -14,13 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $users
+ * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $shops
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Role extends Model
+class Payment extends Model
 {
     use HasFactory;
 
@@ -30,17 +30,16 @@ class Role extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'name',
+        'name'
     ];
 
     /**
-     * Returns the users that have this role.
+     * Returns the shops that featured this Payment types.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function shops(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Shop::class);
     }
 }
