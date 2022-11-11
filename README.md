@@ -1,10 +1,11 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
+<div align="center">
+  <img src="https://img.shields.io/github/contributors/ClickNToulon/clickntoulon-laravel.svg">
+  <img src="https://img.shields.io/github/forks/ClickNToulon/clickntoulon-laravel.svg">
+  <img src="https://img.shields.io/github/stars/ClickNToulon/clickntoulon-laravel.svg">
+  <img src="https://img.shields.io/github/issues/ClickNToulon/clickntoulon-laravel.svg">
+  <img src="https://img.shields.io/github/license/ClickNToulon/clickntoulon-laravel.svg">
+  <img src="https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555">
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
@@ -131,18 +132,6 @@ Project Link: [https://github.com/ClickNToulon/clickntoulon-laravel](https://git
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/ClickNToulon/clickntoulon-laravel.svg
-[contributors-url]: https://github.com/ClickNToulon/clickntoulon-laravel/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ClickNToulon/clickntoulon-laravel.svg
-[forks-url]: https://github.com/ClickNToulon/clickntoulon-laravel/network/members
-[stars-shield]: https://img.shields.io/github/stars/ClickNToulon/clickntoulon-laravel.svg
-[stars-url]: https://github.com/ClickNToulon/clickntoulon-laravel/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ClickNToulon/clickntoulon-laravel.svg
-[issues-url]: https://github.com/ClickNToulon/clickntoulon-laravel/issues
-[license-shield]: https://img.shields.io/github/license/ClickNToulon/clickntoulon-laravel.svg
-[license-url]: https://github.com/ClickNToulon/clickntoulon-laravel/blob/main/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/clickntoulon
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white
