@@ -1,66 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/ClickNToulon/clickntoulon-laravel">
+    <img src="http://da.clickntoulon.fr/images/clickntoulon.svg" alt="Logo" width="auto" height="80">
+  </a>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h3 align="center">ClickNToulon</h3>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  <p align="center">
+    ClickNToulon is an online Click&Collect plateform
+    ·
+    <a href="https://github.com/ClickNToulon/clickntoulon-laravel/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/ClickNToulon/clickntoulon-laravel/issues">Request Feature</a>
+  </p>
+</div>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+ClickNToulon is an association that manages the e-commerce platform of the same name. This platform was imagined by two computer science students in November 2020, to help retailers in Toulon overcome the health crisis due to successive lockdowns.
 
-### Premium Partners
+### Built With
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+* [![Vue][Vue.js]][Vue-url]
+* [![Laravel][Laravel.com]][Laravel-url]
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Prerequisites
+
+The project is based on the Laravel Framework so you'll need Composer, NodeJS and npm installed.
+* npm
+
+  ```sh
+  npm install npm@latest -g
+  ```
+ * Composer
+
+    ```sh
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');"
+    ```
+
+### Installation
+
+1. Clone the repo
+
+   ```sh
+   git clone https://github.com/ClickNToulon/clickntoulon-laravel.git
+   ```
+2. Install Composer Dependencies
+
+    ```sh
+    composer install
+    ```
+3. Install NPM packages
+
+   ```sh
+   npm install
+   ```
+4. Launch the web server bundled with Laravel
+
+   ```sh
+   php artisan serve
+   ```
+<!-- CONTRIBUTING -->
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Code of Conduct
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
+<!-- LICENSE -->
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- CONTACT -->
+## Contact
+
+ClickNToulon - [@ClickNToulon](https://twitter.com/clickntoulon) - contact@clickntoulon.fr
+
+Project Link: [https://github.com/ClickNToulon/clickntoulon-laravel](https://github.com/ClickNToulon/clickntoulon-laravel)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/ClickNToulon/clickntoulon-laravel.svg
+[contributors-url]: https://github.com/ClickNToulon/clickntoulon-laravel/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ClickNToulon/clickntoulon-laravel.svg
+[forks-url]: https://github.com/ClickNToulon/clickntoulon-laravel/network/members
+[stars-shield]: https://img.shields.io/github/stars/ClickNToulon/clickntoulon-laravel.svg
+[stars-url]: https://github.com/ClickNToulon/clickntoulon-laravel/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ClickNToulon/clickntoulon-laravel.svg
+[issues-url]: https://github.com/ClickNToulon/clickntoulon-laravel/issues
+[license-shield]: https://img.shields.io/github/license/ClickNToulon/clickntoulon-laravel.svg
+[license-url]: https://github.com/ClickNToulon/clickntoulon-laravel/blob/main/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/clickntoulon
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
