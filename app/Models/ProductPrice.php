@@ -38,8 +38,8 @@ class ProductPrice extends Model
     protected $fillable = [
         'unitPrice',
         'vat',
-        'startDate',
-        'endDate'
+        'start_date',
+        'end_date'
     ];
 
     /**
