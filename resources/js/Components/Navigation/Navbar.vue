@@ -1,47 +1,87 @@
 <template>
-    <nav class="sticky w-full bg-white z-10">
+    <nav class="fixed w-full z-50 transition-[background-color] duration-300" id="navbar">
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex justify-between">
+        <div class="mx-auto px-4 sm:px-16 lg:px-32 py-4">
+            <div class="flex justify-between items-center space-x-10">
                 <div class="flex">
                     <!-- Logo -->
-                    <div class="shrink-0 flex items-center mx-auto">
-                        <Link :href="route('admin')">
-                            <ApplicationLogo class="block h-9 w-auto text-azure-800 fill-current" />
+                    <div class="shrink-0 flex items-center mx-auto space-x-2">
+                        <Link :href="route('home')">
+                            <ApplicationLogo class="block h-9 w-auto text-slate-900 fill-current" />
+                        </Link>
+                        <Link :href="route('users.index')" class="px-4 py-2 font-semibold outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 text-lg">
+                            Boutiques
+                        </Link>
+                        <Link :href="route('produits.index')" class="px-4 py-2 font-semibold outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 text-lg">
+                            Produits
                         </Link>
                     </div>
                 </div>
 
-                <div class="flex items-center">
-                    <Link href="/" class="px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 font-semibold text-lg">
-                        Accueil
-                    </Link>
-                    <Link :href="route('users.index')" class="px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 font-semibold text-lg">
-                        Boutiques
-                    </Link>
-                    <Link :href="route('users.index')" class="px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 font-semibold text-lg">
-                        Produits
-                    </Link>
-                    <Link :href="route('users.index')" class="px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5 font-semibold text-lg">
-                        Panier
-                    </Link>
+                <div class="flex items-center w-auto">
+                    <!-- Search bar -->
+                    <div class="relative mx-auto">
+                        <form :action="route('produits.index')" method="get">
+                            <input type="text" id="search-bar" name="search" class="w-[42rem] h-10 pl-10 rounded-2xl focus:outline-none ring-gray-900/20 ring-1 focus:ring-2 focus:ring-slate-900 border-none shadow-xl placeholder:text-slate-500 font-medium" placeholder="Rechercher parmi les produits">
+                            <div class="absolute top-0 left-0 inline-flex items-center py-2 px-2">
+                                <svg class="w-6 h-6 text-slate-900" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
-                <div class="hidden md:flex md:-ml-32">
+                <div class="hidden md:flex items-center space-x-2">
+                    <Link :href="route('home')" class="px-4 py-2 outline-none border-2 border-transparent flex items-center space-x-1.5 rounded-xl hover:bg-black hover:bg-opacity-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                        <!-- indicator of number of products inside basket -->
+                        <span class="inline-flex items-center justify-center h-6 w-6 text-xs font-semibold text-white bg-slate-900 rounded-full">
+                            0
+                        </span>
+                    </Link>
+                    <div class="relative flex items-center w-auto">
+                        <Dropdown align="right" width="56">
+                            <template #trigger>
+                                <span>
+                                    <button type="button" class="inline-flex justify-center items-center px-4 py-2 font-semibold text-lg rounded-xl hover:bg-black hover:bg-opacity-5 focus:bg-opacity-5 focus:bg-black focus:outline-none transition ease duration-200">
+                                        &Agrave; propos
+                                        <svg class="ml-1 mt-[0.1875rem] -mr-0.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </template>
+
+                            <template #content>
+                                <DropdownLink>
+                                    Comment ça marche ?
+                                </DropdownLink>
+                                <DropdownLink>
+                                    Qui sommes-nous ?
+                                </DropdownLink>
+                                <DropdownLink>
+                                    Nous contacter
+                                </DropdownLink>
+                                <DropdownLink>
+                                    Aide
+                                </DropdownLink>
+                            </template>
+                        </Dropdown>
+                    </div>
                     <!-- Settings Dropdown -->
                     <div class="ml-3 relative flex items-center" v-if="$page.props.auth.user">
-                        <Link :href="route('users.index')" class="px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease hover:bg-black hover:bg-opacity-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
-                        </Link>
                         <Dropdown align="right" width="48">
                             <template #trigger>
                                 <span class="inline-flex">
                                     <button type="button" class="inline-flex items-center px-4 py-2 font-semibold rounded-xl text-lg hover:bg-black hover:bg-opacity-5 focus:bg-opacity-5 focus:bg-black focus:outline-none transition ease duration-200">
-                                        <svg v-if="admin" fill="none" viewBox="0 0 24 24" stroke-width="0" stroke="currentColor" class="w-7 h-7 mr-1 fill-azure stroke-white">
-                                            <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-                                        </svg>
+                                        <div v-for="role in $page.props.auth.user.roles">
+                                            <svg v-if="role.name === 'Administrateur' || role.name === 'Modérateur'" fill="none" viewBox="0 0 24 24" stroke-width="0" stroke="currentColor" class="w-7 h-7 mr-1 fill-azure stroke-white">
+                                                <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
                                         {{ $page.props.auth.user.name }}
                                         <svg class="ml-2 -mr-0.5 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -66,16 +106,9 @@
                             </template>
                         </Dropdown>
                     </div>
-                    <div class="flex items-center gap-1" v-else>
-                        <Link :href="route('login')" class="flex items-center px-4 py-2 outline-none border border-transparent font-semibold text-lg">
+                    <div class="flex items-center" v-else>
+                        <Link :href="route('login')" class="flex items-center hover:bg-black hover:bg-opacity-5 focus:bg-opacity-5 px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease font-medium text-lg">
                             Se connecter
-                        </Link>
-                        <Link :href="route('register')" class="flex items-center border border-slate-200 hover:border-slate-300 hover:drop-shadow px-4 py-2 outline-none rounded-xl whitespace-nowrap transition duration-200 ease font-semibold text-lg">
-                            S'inscrire
-                            <!-- Caret svg -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ml-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                            </svg>
                         </Link>
                     </div>
                 </div>
@@ -151,13 +184,15 @@ import {ref} from "vue";
 
 const showingNavigationDropdown = ref(false);
 
-const props = defineProps(['roles']);
+window.onscroll = function() {scrollFunction()};
 
-let admin = null;
-
-props.roles.filter(role => {
-    if (role === 'Administrateur' || role === 'Modérateur') {
-        admin = role;
+function scrollFunction() {
+    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
+        document.getElementById("navbar").classList.add("bg-white");
+    } else {
+        if (document.getElementById("navbar").classList.contains("bg-white")) {
+            document.getElementById("navbar").classList.remove("bg-white");
+        }
     }
-});
+}
 </script>

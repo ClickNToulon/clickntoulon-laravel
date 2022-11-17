@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -73,7 +72,7 @@ class UserController extends Controller
     public function ban($id)
     {
         $user = User::find($id);
-        $user->ban = !$user->ban;
+        $user->isBanned = !$user->isBanned;
         $user->save();
 
         return redirect()->route('users.index');
