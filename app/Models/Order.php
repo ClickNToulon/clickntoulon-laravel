@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Defines an Order model. A user can create an order to buy products. An order is also a basket if the property isBasket is true.
@@ -43,9 +45,9 @@ class Order extends Model
     /**
      * Returns the products that are in this order.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
     }
@@ -53,9 +55,9 @@ class Order extends Model
     /**
      * Returns the status of this order
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
-    public function status(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function status(): HasOne
     {
         return $this->hasOne(Status::class);
     }

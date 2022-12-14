@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Defines a Tag model. A tag is a categories that groups shops.
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $shops
+ * @property BelongsToMany $shops
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
@@ -36,9 +37,9 @@ class Tag extends Model
     /**
      * Returns the shops that are tagged with this tag.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function shops(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function shops(): BelongsToMany
     {
         return $this->belongsToMany(Shop::class);
     }

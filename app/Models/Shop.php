@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Defines a Shop model. A shop is a physical shop that sells products and takes orders from users.
@@ -27,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|null $products
  * @property-read \Illuminate\Database\Eloquent\Collection|null $payments
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo|null $tag
+ * @property BelongsTo|null $tag
  *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -56,9 +59,9 @@ class Shop extends Model
     /**
      * Returns the payments of the shop.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function payments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function payments(): BelongsToMany
     {
         return $this->belongsToMany(Payment::class);
     }
@@ -66,9 +69,9 @@ class Shop extends Model
     /**
      * Returns the products of the shop.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
     }
@@ -76,10 +79,18 @@ class Shop extends Model
     /**
      * Returns the tag of the shop.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function tag(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function tag(): BelongsTo
     {
         return $this->belongsTo(Tag::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function timetable(): HasMany
+    {
+        return $this->hasMany(Timetable::class);
     }
 }

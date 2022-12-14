@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Defines a Role Model. A role define the users permissions.
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $users
+ * @property BelongsToMany $users
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
@@ -37,9 +38,9 @@ class Role extends Model
     /**
      * Returns the users that have this role.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
