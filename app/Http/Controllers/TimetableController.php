@@ -13,16 +13,6 @@ use Illuminate\Http\Response;
 class TimetableController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @param Shop $shop
@@ -39,46 +29,13 @@ class TimetableController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     * @param Timetable $timetable
-     * @return Response
-     */
-    public function show(Timetable $timetable)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Timetable $timetable
-     * @return Response
-     */
-    public function edit(Timetable $timetable)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Shop $shop
      * @param Request $request
-     * @param Timetable $timetable
      * @return Response
      */
-    public function update(Shop $shop, Request $request, Timetable $timetable)
+    public function update(Shop $shop, Request $request)
     {
         $openingHours = Timetable::query()
             ->where('shop_id', $shop->get('id'))

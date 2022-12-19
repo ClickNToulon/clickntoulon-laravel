@@ -52,6 +52,12 @@ Route::resource('/products', ProductController::class);
 
 Route::resource('/shops', ShopController::class);
 
-Route::resource('/timetable', TimetableController::class);
+Route::get('/shops/{id}/timetable', [TimetableController::class, 'create']);
+
+Route::patch('/shops/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::put('/shops/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::delete('/shops/{id}/timetable', [TimetableController::class, 'destroy']);
 
 require __DIR__.'/auth.php';
