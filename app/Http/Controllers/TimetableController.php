@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shop;
 use App\Models\Timetable;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -21,12 +25,13 @@ class TimetableController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Shop $shop
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(Shop $shop): View|Factory|Application
     {
         $timetable = Timetable::query()
-            ->where('id_shop', '=', $_SESSION['id_shop'])
+            ->where('shop_id', '=', $shop->get('id'))
             ->get();
         return view('forms.timetable.timetable', [
             'openingHours' => $timetable
@@ -46,7 +51,6 @@ class TimetableController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param Timetable $timetable
      * @return Response
      */
@@ -69,13 +73,71 @@ class TimetableController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param Shop $shop
      * @param Request $request
      * @param Timetable $timetable
      * @return Response
      */
-    public function update(Request $request, Timetable $timetable)
+    public function update(Shop $shop, Request $request, Timetable $timetable)
     {
-        //
+        $openingHours = Timetable::query()
+            ->where('shop_id', $shop->get('id'))
+            ->get();
+        if ($request->getMethod() === "POST" && $request->get('day') !== null) {
+            $data = $request->all();
+            print_r($data);
+            die();
+            unset($data['day']);
+            $k = 0;
+            foreach ($data as $key => $value) {
+                $data[$k] = $value;
+                unset($data[$key]);
+                $k = $k + 1;
+            }
+            $d = 1;
+            dump(count($data));
+            dump($data);
+            for ($i = 0; $i < count($data); $i+=4) {
+                if ($data[$i] !== "" && $data[$i+1] !== "") {
+                    [$day, $response] = $this->setOpeningHours($d, $shop, $data, $i);
+                    if($response) {
+                        return $response;
+                    }
+                    $this->em->persist($day);
+                    $this->em->flush();
+                    $shop->addOpeningHour($day);
+                } else {
+                    [$day, $response] = $this->setOpeningHours($d, $shop, null, $i);
+                    if($response) {
+                        return $response;
+                    }
+                    $this->em->persist($day);
+                    $this->em->flush();
+                    $shop->addOpeningHour($day);
+                }
+                if($data[$i+2] !== "" && $data[$i+3] !== "") {
+                    [$day2, $response] = $this->setOpeningHours($d, $shop, $data, $i+2);
+                    if($response) {
+                        return $response;
+                    }
+                    $this->em->persist($day2);
+                    $this->em->flush();
+                    $shop->addOpeningHour($day2);
+                } else {
+                    [$day2, $response] = $this->setOpeningHours($d, $shop, null, $i+2);
+                    if($response) {
+                        return $response;
+                    }
+                    $this->em->persist($day2);
+                    $this->em->flush();
+                    $shop->addOpeningHour($day2);
+                }
+                $d = $d + 1;
+            }
+            $this->em->flush();
+            $this->addFlash('success', 'Les horaires ont bien été modifiés');
+        }
+        return;
     }
 
     /**

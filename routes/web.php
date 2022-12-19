@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use App\Models\Role;
@@ -46,7 +48,10 @@ Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
     ->name('users.ban')
     ->middleware(['auth', 'verified']);
 
-Route::resource('/products', ProductController::class)
-    ->only(['index', 'show']);
+Route::resource('/products', ProductController::class);
+
+Route::resource('/shops', ShopController::class);
+
+Route::resource('/timetable', TimetableController::class);
 
 require __DIR__.'/auth.php';
