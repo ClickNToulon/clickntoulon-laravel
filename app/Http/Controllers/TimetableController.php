@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Timetable;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TimetableController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,18 +21,23 @@ class TimetableController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        $timetable = Timetable::query()
+            ->where('id_shop', '=', $_SESSION['id_shop'])
+            ->get();
+        return view('forms.timetable.timetable', [
+            'openingHours' => $timetable
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,8 +47,8 @@ class TimetableController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Timetable  $timetable
-     * @return \Illuminate\Http\Response
+     * @param Timetable $timetable
+     * @return Response
      */
     public function show(Timetable $timetable)
     {
@@ -52,8 +58,8 @@ class TimetableController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Timetable  $timetable
-     * @return \Illuminate\Http\Response
+     * @param Timetable $timetable
+     * @return Response
      */
     public function edit(Timetable $timetable)
     {
@@ -63,9 +69,9 @@ class TimetableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Timetable  $timetable
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Timetable $timetable
+     * @return Response
      */
     public function update(Request $request, Timetable $timetable)
     {
@@ -75,8 +81,8 @@ class TimetableController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Timetable  $timetable
-     * @return \Illuminate\Http\Response
+     * @param Timetable $timetable
+     * @return Response
      */
     public function destroy(Timetable $timetable)
     {
