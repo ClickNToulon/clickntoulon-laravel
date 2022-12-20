@@ -15,13 +15,13 @@ class TimetableController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Shop $shop
+     * @param int $id_shop
      * @return Application|Factory|View
      */
-    public function create(Shop $shop): View|Factory|Application
+    public function create(int $id_shop): View|Factory|Application
     {
         $timetable = Timetable::query()
-            ->where('shop_id', '=', $shop->get('id'))
+            ->where('shop_id', '=', $id_shop)
             ->get();
         return view('forms.timetable.timetable', [
             'openingHours' => $timetable
@@ -31,14 +31,14 @@ class TimetableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Shop $shop
+     * @param int $id_shop
      * @param Request $request
      * @return Response
      */
-    public function update(Shop $shop, Request $request)
+    public function update(int $id_shop, Request $request)
     {
         $openingHours = Timetable::query()
-            ->where('shop_id', $shop->get('id'))
+            ->where('shop_id', $id_shop)
             ->get();
         if ($request->getMethod() === "POST" && $request->get('day') !== null) {
             $data = $request->all();

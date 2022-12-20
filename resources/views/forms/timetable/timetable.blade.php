@@ -33,7 +33,7 @@
                                     Lundi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 1])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 1])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="mardi">
                             <div class="col-span-2 flex -mb-4">
@@ -41,7 +41,7 @@
                                     Mardi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 2])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 2])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="mercredi">
                             <div class="col-span-2 flex -mb-4">
@@ -49,7 +49,7 @@
                                     Mercredi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 3])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 3])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="jeudi">
                             <div class="col-span-2 flex -mb-4">
@@ -57,7 +57,7 @@
                                     Jeudi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 4])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 4])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="vendredi">
                             <div class="col-span-2 flex -mb-4">
@@ -65,7 +65,7 @@
                                     Vendredi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 5])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 5])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="samedi">
                             <div class="col-span-2 flex -mb-4">
@@ -73,7 +73,7 @@
                                     Samedi
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 6])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 6])
                         </div>
                         <div class="grid grid-cols-2 gap-y-1 tablet:gap-6 hidden" id="dimanche">
                             <div class="col-span-2 flex -mb-4">
@@ -81,7 +81,7 @@
                                     Dimanche
                                 </label>
                             </div>
-                            @include('inputGroup', ['openingHours' => $openingHours, 'day' => 7])
+                            @include('forms.timetable.inputGroup', ['openingHours' => $openingHours, 'day' => 7])
                         </div>
                         <input type="hidden" value="1" name="day">
                         <div class="text-center">
@@ -101,4 +101,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    function changeTab(divID, tabID) {
+        document.getElementById(divID).classList.toggle('hidden');
+        document.getElementById(divID).classList.toggle('block');
+        document.getElementById(tabID).classList.toggle('tab-active');
+    }
+</script>
 @endsection
