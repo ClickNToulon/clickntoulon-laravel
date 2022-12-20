@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Defines a Payment Model. A Payment instance is a payment made by a User.
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $shops
+ * @property BelongsToMany $shops
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  *
@@ -36,9 +37,9 @@ class Payment extends Model
     /**
      * Returns the shops that featured this Payment types.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function shops(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function shops(): BelongsToMany
     {
         return $this->belongsToMany(Shop::class);
     }

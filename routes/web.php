@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use App\Models\Shop;
@@ -46,6 +48,16 @@ Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
 
 Route::resource('/produits', ProductController::class)
     ->only(['index', 'show']);
+
+Route::resource('/shops', ShopController::class);
+
+Route::get('/shops/{id}/timetable', [TimetableController::class, 'create']);
+
+Route::patch('/shops/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::put('/shops/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::delete('/shops/{id}/timetable', [TimetableController::class, 'destroy']);
 
 Route::get('/search', [ProductController::class, 'search'])
     ->name('search');

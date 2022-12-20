@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Defines a Product model. A Product display the attributes of the real object.
@@ -18,10 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $image
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $orders
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $productType
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $price
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $shop
+ * @property BelongsToMany $orders
+ * @property BelongsTo $productType
+ * @property BelongsTo $price
+ * @property BelongsTo $shop
  *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -42,9 +44,9 @@ class Product extends Model
     /**
      * Returns the orders that buy this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
     }
@@ -52,9 +54,9 @@ class Product extends Model
     /**
      * Returns the price of this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
-    public function price(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function price(): BelongsToMany
     {
         return $this->belongsToMany(ProductPrice::class);
     }
@@ -62,9 +64,9 @@ class Product extends Model
     /**
      * Returns the type of this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function productType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function productType(): BelongsTo
     {
         return $this->belongsTo(ProductType::class);
     }
@@ -72,9 +74,9 @@ class Product extends Model
     /**
      * Returns the shop of this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
     }
