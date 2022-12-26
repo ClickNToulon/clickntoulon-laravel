@@ -1,46 +1,48 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/inertia-vue3';
+import Pill from '@/Components/Navigation/Pill.vue';
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 relative">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 relative">
         <div>
             <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-sky-500" />
+                <ApplicationLogo class="w-auto h-8 fill-current" />
             </Link>
         </div>
         <slot />
-        <ul class="flex space-x-3 pt-12">
+        <!-- Horizontal Rule -->
+        <ul class="flex space-x-4 pt-6">
             <li>
-                <Link href="https://laravel.com/docs" class="text-sm text-gray-700 font-medium hover:text-gray-900 underline">Aide</Link>
+                <Pill href="">Aide</Pill>
             </li>
             <li class="flex items-center justify-center">
                 <!-- circle -->
-                <svg class="w-2 h-2 fill-current text-gray-700" viewBox="0 0 8 8">
+                <svg class="w-2 h-2 fill-current text-slate-300" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />
                 </svg>
             </li>
             <li>
-                <Link href="https://laracasts.com" class="text-sm text-gray-700 font-medium hover:text-gray-900 underline">Conditions Générales d'Utilisation</Link>
+                <Pill href="">Conditions Générales d'Utilisation</Pill>
             </li>
             <li class="flex items-center justify-center">
                 <!-- circle -->
-                <svg class="w-2 h-2 fill-current text-gray-700" viewBox="0 0 8 8">
+                <svg class="w-2 h-2 fill-current text-slate-300" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />
                 </svg>
             </li>
             <li>
-                <Link href="https://laravel-news.com" class="text-sm text-gray-700 font-medium hover:text-gray-900 underline">Politique de confidentialité</Link>
+                <Pill href="">Politique de confidentialité</Pill>
             </li>
             <li class="flex items-center justify-center">
                 <!-- circle -->
-                <svg class="w-2 h-2 fill-current text-gray-700" viewBox="0 0 8 8">
+                <svg class="w-2 h-2 fill-current text-slate-300" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />
                 </svg>
             </li>
             <li>
-                <Link href="https://blog.laravel.com" class="text-sm text-gray-700 font-medium hover:text-gray-900 underline">&Agrave; propos</Link>
+                <Pill href="">&Agrave; propos</Pill>
             </li>
         </ul>
     </div>

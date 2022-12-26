@@ -1,13 +1,14 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Form/InputError.vue';
+import InputLabel from '@/Components/Form/InputLabel.vue';
+import PrimaryButton from '@/Components/Button/PrimaryButton.vue';
+import TextInput from "@/Components/Form/TextInput.vue";
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     name: '',
+    surname: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -23,11 +24,11 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <div class="w-full sm:max-w-[700px] mt-6 p-8 overflow-hidden bg-white rounded-xl shadow-lg">
-            <Head title="S'inscrire"><title>S'inscrire</title></Head>
+        <div class="w-full sm:max-w-xl px-6 py-6 mt-6 overflow-hidden bg-white rounded-2xl">
+            <Head title="Inscription - Simpl'Achat"/>
 
             <form @submit.prevent="submit">
-                <div class="grid grid-cols-2 gap-x-4">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
                         <InputLabel for="name" value="Nom" />
                         <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
@@ -39,7 +40,6 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.surname" />
                     </div>
                 </div>
-
                 <div class="mt-4">
                     <InputLabel for="email" value="Adresse mail" />
                     <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" />
@@ -59,12 +59,12 @@ const submit = () => {
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <PrimaryButton class="w-full" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton class="w-full tracking-wide" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         S'inscrire
                     </PrimaryButton>
                 </div>
                 <div class="flex items-center justify-center mt-4">
-                    <Link :href="route('login')" class="text-sm text-gray-700 font-medium hover:text-gray-900">
+                    <Link :href="route('login')" class="relative text-gray-700 !underline underline-offset-2 decoration-[2px] font-medium hover:text-darkorange">
                         Vous avez déjà un compte ? Connectez-vous
                     </Link>
                 </div>

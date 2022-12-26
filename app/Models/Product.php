@@ -2,29 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Shop;
+use App\Models\ProductType;
+use App\Models\Order;
+use App\Models\ProductPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Defines a Product model. A Product display the attributes of the real object.
- * So like the description, the barcode, the direct link to add it to an order and so on.
- *
- * @author Corentin Thibaud <corentin.thibaud@clickntoulon.fr>
- * @author Quentin Boitel <quentin.boitel@clickntoulon.fr>
- * @version 0.1.0
- *
- * @property-read int $id
- * @property string $name
- * @property string $image
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $orders
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $productType
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $price
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $shop
- *
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
 class Product extends Model
 {
     use HasFactory;
@@ -36,13 +20,53 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'image',
+        'shop',
+        'type',
+        'size',
+        'color',
+        'quantity'
     ];
 
     /**
-     * Returns the orders that buy this product.
+     * The attributes that should be hidden for serialization.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<int, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the shop that owns the product.
+     */
+    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    /**
+     * Get the type that owns the product.
+     */
+    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ProductType::class);
+    }
+
+    /**
+     * Get the orders for the product.
      */
     public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -50,32 +74,10 @@ class Product extends Model
     }
 
     /**
-     * Returns the price of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Get the prices for the product.
      */
-    public function price(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function prices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(ProductPrice::class);
-    }
-
-    /**
-     * Returns the type of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function productType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(ProductType::class);
-    }
-
-    /**
-     * Returns the shop of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Shop::class);
+        return $this->hasMany(ProductPrice::class);
     }
 }

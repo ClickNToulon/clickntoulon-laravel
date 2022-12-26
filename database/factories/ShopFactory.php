@@ -23,6 +23,7 @@ class ShopFactory extends Factory
             'slug' => fake()->slug(),
             'address' => fake()->address(),
             'email' => fake()->email(),
+            'phone' => fake()->phoneNumber(),
             'city' => fake()->city(),
             'postalCode' => "83000",
             'isBanned' => fake()->boolean(),

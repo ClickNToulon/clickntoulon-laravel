@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,9 +21,6 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $email
  * @property string $password
  * @property string $remember_token
- * @property string|null $address
- * @property string|null $city
- * @property string|null $postalCode
  * @property int|null $phone
  * @property bool $isBanned
  * @property bool $isVerified
@@ -34,7 +31,7 @@ use Laravel\Sanctum\HasApiTokens;
  *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -49,9 +46,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'address',
-        'city',
-        'postalCode'
+        'isBanned',
+        'isVerified',
     ];
 
     /**
@@ -74,12 +70,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * Returns the roles of the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Get orders for the user.
      */
-    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->hasMany(Order::class);
     }
 }

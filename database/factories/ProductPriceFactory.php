@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,9 +19,12 @@ class ProductPriceFactory extends Factory
     {
         return [
             'unitPrice' => fake()->randomFloat(0, 0, 100),
-            'unitPriceDiscount' => fake()->randomFloat(1, 0, 1),
+            'discount' => fake()->randomFloat(1, 0, 1),
+            'discountedPrice' => fake()->randomFloat(0, 0, 100),
             'vat' => fake()->randomFloat(2, 0, 20),
-            'startDate' => fake()->dateTimeBetween('-1 year', 'now')
+            'vatPrice' => fake()->randomFloat(0, 0, 100),
+            'discountedFrom' => fake()->dateTimeBetween('-1 year', 'now'),
+            'product_id' => Product::factory(),
         ];
     }
 }

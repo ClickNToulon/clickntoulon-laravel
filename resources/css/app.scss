@@ -6,13 +6,93 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Satoshi';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-LightItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-MediumItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-BoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-Black.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/satoshi/Satoshi-BlackItalic.woff2') format('woff2');
+}
+
 * {
-    font-family: 'Quicksand', sans-serif !important;
+    font-family: 'Satoshi', sans-serif !important;
     text-size-adjust: 100%;
 }
 
 a:any-link {
-    text-decoration: none !important;
+    text-decoration: none;
 }
 
 button {
@@ -54,3 +134,38 @@ button {
         transform: scale3d(1.1, 1.1, 1);
     }
 }
+
+.h-hero {
+    height: calc(100vh - 458px);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 11px;
+    height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-darkorange rounded;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-300 rounded;
+}
+
+.min-h-sidebar {
+    min-height: calc(100vh - 104px) !important;
+}
+
+@keyframes disappear {
+	0% {
+		display: block;
+	}
+	100% {
+		display: none;
+	}
+}
+
+.animate-display {
+	animation: disappear 0.5s ease-in-out;
+}
+
