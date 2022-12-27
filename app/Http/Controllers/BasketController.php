@@ -31,7 +31,7 @@ class BasketController extends Controller
 		$order = Order::with('products.prices')->where('user_id', auth()->user()->id)->where('isBasket', 1)->first();
 		if ($order) {
 			if ($order->products->contains(Product::find($request->data['productId']))) {
-				$productQuantity = $order->products->find($request->data['productId'])->pivot->quantityOrdered;
+				$productQuantity = $order->products()->find($request->data['productId'])->pivot->quantityOrdered;
 				$order->products()->updateExistingPivot($request->data['productId'], ['quantityOrdered' => $productQuantity + $request->data['quantity']]);
 			} else {
 				$order->products()->save(Product::find($request->data['productId']), ['quantityOrdered' => $request->data['quantity']]);
@@ -76,10 +76,14 @@ class BasketController extends Controller
 		foreach ($order->products()->get() as $product) {
 			$prices = $product->prices;
 			foreach ($prices as $price) {
-				if ($price->discount !== null && ($price->discountedUntil > now() || $price->discountedUntil === null)) {
-					$order->total += $price->discountedPrice * $product->pivot->quantityOrdered;
-				} else {
+				if ($price->discount !== null && $price->discountedUntil < now() && $price->discountedUntil !== null) {
 					$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
+				} else {
+					if ($price->discount !== null && ($price->discountedUntil === null) OR $price->discountedUntil > now()) {
+						$order->total += $price->discountedPrice * $product->pivot->quantityOrdered;
+					} else {
+						$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
+					}
 				}
 			}
 		}

@@ -2,16 +2,22 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import {Inertia} from "@inertiajs/inertia";
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
 
 defineProps(['product']);
 
-function isInTheFuture(date) {
-    if (date === null) {
-        return true;
-    }
-    return new Date(date) > new Date();
+function isInTheFuture(date, fromDate) {
+	if (date === null) {
+		return true;
+	}
+	// check if orderDate is between fromDate and date
+	return dayjs(dayjs()).isBetween(fromDate, date, null, '[]');
 }
-
 function addProduct(id) {
 	Inertia.post(route('basket.addProduct'), {
 		preserveState: true,
@@ -81,7 +87,7 @@ function addProduct(id) {
             <div class="border-t-2 border-slate-300 pt-2">
                 <div class="flex flex-col 2.5xl:flex-row justify-between items-start 2.5xl:items-center space-y-2 2.5xl:space-y-0">
                     <div v-for="price in product.prices">
-                        <div v-if="price.discount !== null && isInTheFuture(price.discountedUntil)">
+                        <div v-if="price.discount !== null && isInTheFuture(price.discountedUntil, price.discountedFrom)">
                             <div class="space-x-3 flex items-center">
                                 <p class="text-2xl font-semibold tracking-wide">
                                     {{ price.discountedPrice }}€

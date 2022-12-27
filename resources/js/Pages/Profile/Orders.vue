@@ -3,19 +3,22 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import Navbar from "@/Components/Navigation/Navbar.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import  isBetween from 'dayjs/plugin/isBetween';
 import SecondaryButton from "@/Components/Button/SecondaryButton.vue";
 import SecondaryDangerButton from "@/Components/Button/SecondaryDangerButton.vue";
 import Footer from "@/Components/Navigation/Footer.vue";
 
-function isInTheFuture(date) {
+function isInTheFuture(date, fromDate, orderDate) {
 	if (date === null) {
 		return true;
 	}
-	return new Date(date) > new Date();
+	// check if orderDate is between fromDate and date
+	return dayjs(orderDate).isBetween(fromDate, date, null, '[]');
 }
 
 defineProps(["orders"]);
 dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
 </script>
 
 <template>
@@ -141,7 +144,7 @@ dayjs.extend(relativeTime);
 										{{ product.description }}
 									</p>
 									<div v-for="price in product.prices" class="max-w-sm">
-										<div v-if="price.discount !== null && isInTheFuture(price.discountedUntil)" class="space-x-3 flex items-center max-w-fit">
+										<div v-if="price.discount !== null && isInTheFuture(price.discountedUntil, price.discountedFrom, order.created_at)" class="space-x-3 flex items-center max-w-fit">
 											<p class="text-2xl font-semibold tracking-wide">
 												{{ price.discountedPrice }}€
 											</p>
