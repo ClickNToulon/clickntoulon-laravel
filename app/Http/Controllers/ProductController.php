@@ -19,14 +19,24 @@ class ProductController extends Controller
     public function index(): \Inertia\Response
     {
         $products = Product::with('type', 'shop', 'prices');
-        $search = request('search');
+        // filter by name
+		$search = request('search');
         if ($search) {
             $products = $products->where('name', 'like', '%' . $search . '%');
         }
-        $productType = request('types');
-        if ($productType) {
-            $products = $products->where('type', $productType);
-        }
+		// filter by type
+		$productType = request('types');
+		if ($productType) {
+			$products = $products->whereIn('type_id', $productType);
+		}
+		// filter by on_sale
+		$onSale = request('on_sale');
+		if ($onSale) {
+			// check if price discount is greater than 0 and discountedUntil is in the future
+			$products = $products->whereHas('prices', function ($query) {
+				$query->where('discount', '>', 0)->where('discountedUntil', '>', now());
+			});
+		}
         $products = $products->paginate(12);
         return Inertia::render('Products/Index', [
             'products' => $products,
