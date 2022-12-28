@@ -164,7 +164,7 @@ dayjs.extend(isBetween);
 												-{{ price.discount * 100 }}%
 											</p>
 										</div>
-										<div v-else-if="checkDatesAfter(price.discountedUntil, order.created_at)">
+										<div v-else-if="checkDatesAfter(price.discountedUntil, order.created_at) && price === product.prices[(product.prices).length - 1]">
 											<p class="font-semibold text-2xl text-slate-900">
 												{{ price.unitPrice }}€
 											</p>

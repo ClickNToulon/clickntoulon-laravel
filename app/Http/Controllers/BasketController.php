@@ -22,7 +22,9 @@ class BasketController extends Controller
 			->where('user_id', auth()->user()->id)
 			->where('isBasket', 1)
 			->first();
-		$this->updateOrderTotal($basket);
+		if ($basket) {
+			$this->updateOrderTotal($basket);
+		}
         return Inertia::render('Basket', [
 			'basket' => $basket,
 		]);
