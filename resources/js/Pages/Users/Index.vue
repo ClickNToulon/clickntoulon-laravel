@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
-import Pagination from '@/Components/Pagination.vue';
+import Pagination from '@/Components/Navigation/Pagination.vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Dialog, DialogPanel, DialogTitle, TransitionRoot, TransitionChild } from '@headlessui/vue';

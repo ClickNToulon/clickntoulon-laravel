@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BasketController;
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
@@ -25,14 +27,12 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'roles' => Auth::user() ? Auth::user()->roles->pluck('name') : [],
-        'canLogin' => Route::has('login'),
-        'products' => Product::with('productType', 'price')->latest()->paginate(3),
+        'products' => Product::with('type', 'shop', 'prices')->latest()->paginate(12),
     ]);
 })->name('home');
 
 Route::get('/admin', function () {
-    return Inertia::render('Admin', [
+    return Inertia::render('Dashboard', [
         'avatar' => Auth::user()->avatar,
         'users' => User::all()
     ]);
@@ -49,31 +49,45 @@ Route::delete("/admin/users/ban/{id}", [UserController::class, 'ban'])
 Route::resource('/produits', ProductController::class)
     ->only(['index', 'show']);
 
-Route::resource('/shops', ShopController::class);
+Route::resource('/boutiques', ShopController::class)
+    ->only(['index', 'show']);
 
-Route::get('/shops/{id}/timetable', [TimetableController::class, 'create']);
+Route::get('/boutiques/{id}/timetable', [TimetableController::class, 'create']);
 
-Route::patch('/shops/{id}/timetable', [TimetableController::class, 'update']);
+Route::patch('/boutiques/{id}/timetable', [TimetableController::class, 'update']);
 
-Route::put('/shops/{id}/timetable', [TimetableController::class, 'update']);
+Route::put('/boutiques/{id}/timetable', [TimetableController::class, 'update']);
 
-Route::delete('/shops/{id}/timetable', [TimetableController::class, 'destroy']);
+Route::delete('/boutiques/{id}/timetable', [TimetableController::class, 'destroy']);
 
 Route::get('/search', [ProductController::class, 'search'])
     ->name('search');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
-        'shops' => Shop::all(),
-        'products' => Product::all(),
-        'users' => User::all(),
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/help', [HelpController::class, 'index'])
+    ->name('help');
+
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/panier', [BasketController::class, 'index'])
+		->name('basket.index');
+
+	Route::post('/panier/ajouter', [BasketController::class, 'addProduct'])
+		->name('basket.addProduct');
+
+	Route::delete('/panier/supprimer', [BasketController::class, 'removeProduct'])
+		->name('basket.removeProduct');
+
+	Route::post('/panier/modifier', [BasketController::class, 'updateProduct'])
+		->name('basket.updateProduct');
+
+	Route::post('/panier/checkout', [BasketController::class, 'checkout'])
+		->name('basket.checkout');
+});
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/mon-compte', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/mon-compte', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/mon-compte', [ProfileController::class, 'destroy'])->name('profile.destroy');
+	Route::get('/mon-compte/commandes', [ProfileController::class, 'orders'])->name('profile.orders');
 });
 
 require __DIR__.'/auth.php';

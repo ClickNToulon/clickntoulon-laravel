@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a Shop model. A shop is a physical shop that sells products and takes orders from users.
@@ -26,13 +28,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $image
  * @property bool $isBanned
  * @property bool $isVerified
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|null $products
- * @property-read \Illuminate\Database\Eloquent\Collection|null $payments
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property-read Collection|null $products
+ * @property-read Collection|null $payments
  * @property BelongsTo|null $tag
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class Shop extends Model
 {
@@ -45,52 +47,54 @@ class Shop extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
+        'description',
+        'image',
         'address',
         'city',
         'postalCode',
         'phone',
-        'email',
-        'image',
-        'isBanned',
-        'isVerified'
+        'email'
     ];
 
     /**
-     * Returns the payments of the shop.
+     * The attributes that should be cast.
      *
-     * @return BelongsToMany
+     * @var array<int, string>
      */
-    public function payments(): BelongsToMany
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the products for the shop.
+     */
+    public function products(): HasMany
     {
-        return $this->belongsToMany(Payment::class);
+        return $this->hasMany(Product::class);
     }
 
     /**
-     * Returns the products of the shop.
-     *
-     * @return BelongsToMany
+     * Get the orders for the shop.
      */
-    public function products(): BelongsToMany
+    public function orders(): HasMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Order::class);
     }
 
     /**
-     * Returns the tag of the shop.
-     *
-     * @return BelongsTo
+     * Get the payments for the shop.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Get the tag for the shop.
      */
     public function tag(): BelongsTo
     {
         return $this->belongsTo(Tag::class);
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function timetable(): HasMany
-    {
-        return $this->hasMany(Timetable::class);
     }
 }

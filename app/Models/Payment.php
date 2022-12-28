@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a Payment Model. A Payment instance is a payment made by a User.
@@ -16,10 +18,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int $id
  * @property string $name
  * @property BelongsToMany $shops
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class Payment extends Model
 {
@@ -31,13 +33,21 @@ class Payment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name'
+        'paymentMethod',
     ];
 
     /**
-     * Returns the shops that featured this Payment types.
+     * The attributes that should be cast.
      *
-     * @return BelongsToMany
+     * @var array<int, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the shops that has the payment.
      */
     public function shops(): BelongsToMany
     {

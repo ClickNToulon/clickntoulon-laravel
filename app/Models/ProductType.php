@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a ProductType model. A productType define a product type.
@@ -15,10 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property-read int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class ProductType extends Model
 {
@@ -34,12 +36,20 @@ class ProductType extends Model
     ];
 
     /**
-     * Returns the products that has this product type.
+     * The attributes that should be cast.
      *
-     * @return BelongsToMany
+     * @var array<int, string>
      */
-    public function products(): BelongsToMany
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the products for the product type.
+     */
+    public function products(): HasMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 }

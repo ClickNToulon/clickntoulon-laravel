@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Shop;
+use App\Models\ProductType;
+use App\Models\Order;
+use App\Models\ProductPrice;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a Product model. A Product display the attributes of the real object.
@@ -18,14 +25,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int $id
  * @property string $name
  * @property string $image
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property BelongsToMany $orders
  * @property BelongsTo $productType
  * @property BelongsTo $price
  * @property BelongsTo $shop
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class Product extends Model
 {
@@ -38,13 +45,43 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'image',
+        'shop',
+        'type',
+        'size',
+        'color',
+        'quantity'
     ];
 
     /**
-     * Returns the orders that buy this product.
+     * The attributes that should be cast.
      *
-     * @return BelongsToMany
+     * @var array<int, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the shop that owns the product.
+     */
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    /**
+     * Get the type that owns the product.
+     */
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(ProductType::class);
+    }
+
+    /**
+     * Get the orders for the product.
      */
     public function orders(): BelongsToMany
     {
@@ -52,32 +89,10 @@ class Product extends Model
     }
 
     /**
-     * Returns the price of this product.
-     *
-     * @return BelongsToMany
+     * Get the prices for the product.
      */
-    public function price(): BelongsToMany
+    public function prices(): HasMany
     {
-        return $this->belongsToMany(ProductPrice::class);
-    }
-
-    /**
-     * Returns the type of this product.
-     *
-     * @return BelongsTo
-     */
-    public function productType(): BelongsTo
-    {
-        return $this->belongsTo(ProductType::class);
-    }
-
-    /**
-     * Returns the shop of this product.
-     *
-     * @return BelongsTo
-     */
-    public function shop(): BelongsTo
-    {
-        return $this->belongsTo(Shop::class);
+        return $this->hasMany(ProductPrice::class);
     }
 }

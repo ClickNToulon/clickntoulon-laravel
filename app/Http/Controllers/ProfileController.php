@@ -67,4 +67,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+	public function orders(Request $request)
+	{
+		return Inertia::render('Profile/Orders', [
+			'orders' => $request->user()->orders()->with('products.prices', 'products.shop', 'status')->where('isBasket', 0)->get(),
+		]);
+	}
 }
