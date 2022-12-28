@@ -5,8 +5,10 @@ use App\Http\Controllers\HelpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +51,14 @@ Route::resource('/produits', ProductController::class)
 
 Route::resource('/boutiques', ShopController::class)
     ->only(['index', 'show']);
+
+Route::get('/boutiques/{id}/timetable', [TimetableController::class, 'create']);
+
+Route::patch('/boutiques/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::put('/boutiques/{id}/timetable', [TimetableController::class, 'update']);
+
+Route::delete('/boutiques/{id}/timetable', [TimetableController::class, 'destroy']);
 
 Route::get('/search', [ProductController::class, 'search'])
     ->name('search');

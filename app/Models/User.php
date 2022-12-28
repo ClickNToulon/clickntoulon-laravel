@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -24,12 +28,12 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int|null $phone
  * @property bool $isBanned
  * @property bool $isVerified
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property \Illuminate\Database\Eloquent\Collection|null $roles
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon|null $email_verified_at
+ * @property Collection|null $roles
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -72,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get orders for the user.
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }

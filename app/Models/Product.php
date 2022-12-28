@@ -6,9 +6,34 @@ use App\Models\Shop;
 use App\Models\ProductType;
 use App\Models\Order;
 use App\Models\ProductPrice;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * Defines a Product model. A Product display the attributes of the real object.
+ * So like the description, the barcode, the direct link to add it to an order and so on.
+ *
+ * @author Corentin Thibaud <corentin.thibaud@clickntoulon.fr>
+ * @author Quentin Boitel <quentin.boitel@clickntoulon.fr>
+ * @version 0.1.0
+ *
+ * @property-read int $id
+ * @property string $name
+ * @property string $image
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property BelongsToMany $orders
+ * @property BelongsTo $productType
+ * @property BelongsTo $price
+ * @property BelongsTo $shop
+ *
+ * @mixin Builder
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -42,7 +67,7 @@ class Product extends Model
     /**
      * Get the shop that owns the product.
      */
-    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
     }
@@ -50,7 +75,7 @@ class Product extends Model
     /**
      * Get the type that owns the product.
      */
-    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(ProductType::class);
     }
@@ -58,7 +83,7 @@ class Product extends Model
     /**
      * Get the orders for the product.
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
     }
@@ -66,7 +91,7 @@ class Product extends Model
     /**
      * Get the prices for the product.
      */
-    public function prices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class);
     }

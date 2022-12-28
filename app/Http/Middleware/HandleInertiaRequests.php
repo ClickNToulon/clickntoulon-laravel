@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Order;
-use App\Models\Status;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
