@@ -86,27 +86,25 @@ function addProduct(id) {
             </div>
             <div class="border-t-2 border-slate-300 pt-2">
                 <div class="flex flex-col 2.5xl:flex-row justify-between items-start 2.5xl:items-center space-y-2 2.5xl:space-y-0">
-                    <div v-for="price in product.prices">
-                        <div v-if="price.discount !== null && isInTheFuture(price.discountedUntil, price.discountedFrom)">
-                            <div class="space-x-3 flex items-center">
-                                <p class="text-2xl font-semibold tracking-wide">
-                                    {{ price.discountedPrice }}€
-                                </p>
-                                <p class="text-2xl font-medium text-slate-400 line-through tracking-wide">
-                                    {{ price.unitPrice }}€
-                                </p>
-                                <!-- Discount -->
-                                <p class="text-xl font-semibold text-danger tracking-wide">
-                                    -{{ price.discount * 100 }}%
-                                </p>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <p class="font-semibold text-2xl text-slate-900">
-                                {{ price.unitPrice }}€
-                            </p>
-                        </div>
-                    </div>
+					<div>
+						<div v-if="product.prices[(product.prices).length - 1].discount !== null && isInTheFuture(product.prices[(product.prices).length - 1].discountedUntil, product.prices[(product.prices).length - 1].discountedFrom)" class="space-x-3 flex items-center max-w-fit">
+							<p class="text-2xl font-semibold tracking-wide">
+								{{ product.prices[(product.prices).length - 1].discountedPrice }}€
+							</p>
+							<p class="text-2xl font-medium text-slate-400 line-through tracking-wide">
+								{{ product.prices[(product.prices).length - 1].unitPrice }}€
+							</p>
+							<!-- Discount -->
+							<p class="text-xl font-semibold text-danger tracking-wide">
+								-{{ product.prices[(product.prices).length - 1].discount * 100 }}%
+							</p>
+						</div>
+						<div v-else>
+							<p class="font-semibold text-2xl text-slate-900">
+								{{ product.prices[(product.prices).length - 1].unitPrice }}€
+							</p>
+						</div>
+					</div>
                     <PrimaryButton @click="addProduct(product.id)" class="w-full 2.5xl:w-auto">
                         Ajouter au panier
                     </PrimaryButton>

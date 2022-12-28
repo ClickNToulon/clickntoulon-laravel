@@ -8,12 +8,20 @@ import SecondaryButton from "@/Components/Button/SecondaryButton.vue";
 import SecondaryDangerButton from "@/Components/Button/SecondaryDangerButton.vue";
 import Footer from "@/Components/Navigation/Footer.vue";
 
-function isInTheFuture(date, fromDate, orderDate) {
+function checkDates(date, toDate, orderDate) {
+	if (toDate === null) {
+		return dayjs(orderDate).isAfter(date);
+	}
+	// check if orderDate is between date and toDate
+	return dayjs(dayjs(orderDate)).isBetween(date, toDate, null, '[]');
+}
+
+function checkDatesAfter(date, orderDate) {
 	if (date === null) {
 		return true;
 	}
-	// check if orderDate is between fromDate and date
-	return dayjs(orderDate).isBetween(fromDate, date, null, '[]');
+	// check if orderDate is between date and toDate
+	return dayjs(dayjs(orderDate)).isAfter(date);
 }
 
 defineProps(["orders"]);
@@ -118,7 +126,7 @@ dayjs.extend(isBetween);
 						</div>
 						<div class="p-4 border-b border-gray-300 last-of-type:border-none" v-for="product in order.products">
 							<div class="flex flex-row items-start space-x-4 w-full">
-								<img :src="product.image" class="w-36 h-36 rounded-xl" alt="Product image">
+								<img :src="product.image" class="w-40 h-40 rounded-xl" alt="Product image">
 								<div class="flex flex-col space-y-2">
 									<div class="flex items-center space-x-4">
 										<Link class="text-2xl font-semibold text-darkorange w-fit" :href="route('produits.show', product.id)">
@@ -144,7 +152,7 @@ dayjs.extend(isBetween);
 										{{ product.description }}
 									</p>
 									<div v-for="price in product.prices" class="max-w-sm">
-										<div v-if="price.discount !== null && isInTheFuture(price.discountedUntil, price.discountedFrom, order.created_at)" class="space-x-3 flex items-center max-w-fit">
+										<div v-if="price.discount !== null && checkDates(price.discountedUntil, price.discountedFrom, order.created_at)" class="space-x-3 flex items-center max-w-fit">
 											<p class="text-2xl font-semibold tracking-wide">
 												{{ price.discountedPrice }}€
 											</p>
@@ -156,7 +164,7 @@ dayjs.extend(isBetween);
 												-{{ price.discount * 100 }}%
 											</p>
 										</div>
-										<div v-else>
+										<div v-else-if="checkDatesAfter(price.discountedUntil, order.created_at)">
 											<p class="font-semibold text-2xl text-slate-900">
 												{{ price.unitPrice }}€
 											</p>

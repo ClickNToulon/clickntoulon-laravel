@@ -7,12 +7,19 @@ import SecondaryDangerButton from "@/Components/Button/SecondaryDangerButton.vue
 import SelectInput from "@/Components/Form/SelectInput.vue";
 import {Inertia} from '@inertiajs/inertia';
 import {ref} from "vue";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import isBetween from "dayjs/plugin/isBetween";
 
-function isInTheFuture(date) {
-	if (date === null) {
-		return true;
+dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
+
+function checkDates(date, toDate) {
+	if (toDate === null) {
+		return dayjs(dayjs()).isAfter(date);
 	}
-	return new Date(date) > new Date();
+	// check if orderDate is between date and toDate
+	return dayjs(dayjs()).isBetween(date, toDate, null, '[]');
 }
 
 function updateProduct(id) {
@@ -80,7 +87,7 @@ const alert = ref(true);
 							<div v-for="(product, index) in basket.products" :key="product.id">
 								<div class="flex flex-row items-start justify-between gap-4 mb-3 last:mb-0">
 									<div class="flex flex-row items-center space-x-4 w-4/5">
-										<img :src="product.image" class="w-32 h-32 rounded-xl" alt="Product image">
+										<img :src="product.image" class="w-36 h-36 rounded-xl" alt="Product image">
 										<div class="flex flex-col space-y-2">
 											<Link class="text-2xl font-semibold text-darkorange w-fit" :href="route('produits.show', product.id)">
 												{{ product.name }}
@@ -90,7 +97,7 @@ const alert = ref(true);
 												{{ product.description }}
 											</p>
 											<div v-for="price in product.prices" class="max-w-sm">
-												<div v-if="price.discount !== null && isInTheFuture(price.discountedUntil)" class="space-x-3 flex items-center max-w-fit">
+												<div v-if="price.discount !== null && checkDates(price.discountedFrom, price.discountedUntil)" class="space-x-3 flex items-center max-w-fit">
 													<p class="text-2xl font-semibold tracking-wide">
 														{{ price.discountedPrice }}€
 													</p>
@@ -102,7 +109,7 @@ const alert = ref(true);
 														-{{ price.discount * 100 }}%
 													</p>
 												</div>
-												<div v-else>
+												<div v-else-if="price === product.prices[(product.prices).length - 1]">
 													<p class="font-semibold text-2xl text-slate-900">
 														{{ price.unitPrice }}€
 													</p>

@@ -17,11 +17,14 @@ class BasketController extends Controller
      */
     public function index(): \Inertia\Response
     {
+		/** @var Order $basket */
+		$basket = Order::with('products.prices', 'products.shop')
+			->where('user_id', auth()->user()->id)
+			->where('isBasket', 1)
+			->first();
+		$this->updateOrderTotal($basket);
         return Inertia::render('Basket', [
-			'basket' => Order::with('products.prices', 'products.shop')
-				->where('user_id', auth()->user()->id)
-				->where('isBasket', 1)
-				->first(),
+			'basket' => $basket,
 		]);
     }
 
@@ -74,15 +77,27 @@ class BasketController extends Controller
 	{
 		$order->total = 0;
 		foreach ($order->products()->get() as $product) {
-			$prices = $product->prices;
+			$prices = $product->prices()->get();
 			foreach ($prices as $price) {
-				if ($price->discount !== null && $price->discountedUntil < now() && $price->discountedUntil !== null) {
-					$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
-				} else {
-					if ($price->discount !== null && ($price->discountedUntil === null) OR $price->discountedUntil > now()) {
-						$order->total += $price->discountedPrice * $product->pivot->quantityOrdered;
-					} else {
+				if (now() > $price->discountedFrom && ($price->discountedUntil > now() || $price->discountedUntil === null)) {
+					if ($price->discount !== null && $price->discountedUntil < now() && $price->discountedUntil !== null) {
 						$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
+					} else {
+						if ($price->discount !== null && ($price->discountedUntil === null) OR $price->discountedUntil > now()) {
+							$order->total += $price->discountedPrice * $product->pivot->quantityOrdered;
+						} else {
+							$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
+						}
+					}
+				} else {
+					if ($prices->last() !== $price) {
+						continue;
+					} else {
+						if ($price->discount !== null && ($price->discountedUntil === null) OR $price->discountedUntil > now()) {
+							$order->total += $price->discountedPrice * $product->pivot->quantityOrdered;
+						} else {
+							$order->total += $price->unitPrice * $product->pivot->quantityOrdered;
+						}
 					}
 				}
 			}
