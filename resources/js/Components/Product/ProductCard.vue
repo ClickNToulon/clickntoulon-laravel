@@ -11,7 +11,7 @@ dayjs.extend(isBetween);
 
 defineProps(['product']);
 
-function isInTheFuture(date, fromDate) {
+function checkDates(date, fromDate) {
 	if (date === null) {
 		return true;
 	}
@@ -87,7 +87,7 @@ function addProduct(id) {
             <div class="border-t-2 border-slate-300 pt-2">
                 <div class="flex flex-col 2.5xl:flex-row justify-between items-start 2.5xl:items-center space-y-2 2.5xl:space-y-0">
 					<div>
-						<div v-if="product.prices[(product.prices).length - 1].discount !== null && isInTheFuture(product.prices[(product.prices).length - 1].discountedUntil, product.prices[(product.prices).length - 1].discountedFrom)" class="space-x-3 flex items-center max-w-fit">
+						<div v-if="product.prices[(product.prices).length - 1].discount !== null && checkDates(product.prices[(product.prices).length - 1].discountedUntil, product.prices[(product.prices).length - 1].discountedFrom)" class="space-x-3 flex items-center max-w-fit">
 							<p class="text-2xl font-semibold tracking-wide">
 								{{ product.prices[(product.prices).length - 1].discountedPrice }}€
 							</p>
