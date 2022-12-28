@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductType;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,8 +18,42 @@ class ProductController extends Controller
      */
     public function index(): \Inertia\Response
     {
+        $products = Product::with('type', 'shop', 'prices');
+        $search = request('search');
+        if ($search) {
+            $products = $products->where('name', 'like', '%' . $search . '%');
+        }
+        $productType = request('types');
+        if ($productType) {
+            $products = $products->where('type', $productType);
+        }
+        $products = $products->paginate(12);
         return Inertia::render('Products/Index', [
-            'products' => Product::all()
+            'products' => $products,
+            'types' => ProductType::all(),
+            'productType' => $productType,
+        ]);
+    }
+
+    /**
+     * Search for a product.
+     *
+     * @return \Inertia\Response
+     */
+    public function search(): \Inertia\Response
+    {
+        $products = Product::with('type', 'price');
+        if(\request('search')) {
+            $products = $products->where('name', 'like', '%' . \request('search') . '%');
+        }
+        if (\request()->has('types') and request('search') !== null) {
+            $products = $products->orWhere('product_type_id', 'IN' . implode(',', \request('types')) . ')');
+        } else {
+            $products = $products->where('product_type_id', 'IN' . implode(',', \request('types')) . ')');
+        }
+        return Inertia::render('Products/Index', [
+            'products' => $products->paginate(12),
+            'types' => ProductType::all(),
         ]);
     }
 
@@ -45,11 +82,14 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function show(Product $product)
+    public function show(int $id): \Inertia\Response
     {
-        //
+        $product = Product::with('type', 'prices', 'shop')->findOrFail($id);
+        return Inertia::render('Products/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**
