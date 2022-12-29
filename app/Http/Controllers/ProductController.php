@@ -32,8 +32,34 @@ class ProductController extends Controller
 		if ($productType) {
 			$products = $products->whereIn('type_id', $productType);
 		}
-		// filter by on_sale
+		// filter by min price
 		$onSale = request('on_sale');
+		$minPrice = request('min_price');
+		if ($minPrice) {
+			if ($onSale) {
+				$products = $products->whereHas('prices', function ($query) use ($minPrice) {
+					$query->where('discountedPrice', '>=', $minPrice);
+				});
+			} else {
+				$products = $products->whereHas('prices', function ($query) use ($minPrice) {
+					$query->where('unitPrice', '>=', $minPrice);
+				});
+			}
+		}
+		// filter by max price
+		$maxPrice = request('max_price');
+		if ($maxPrice) {
+			if ($onSale) {
+				$products = $products->whereHas('prices', function ($query) use ($maxPrice) {
+					$query->where('discountedPrice', '<=', $maxPrice);
+				});
+			} else {
+				$products = $products->whereHas('prices', function ($query) use ($maxPrice) {
+					$query->where('unitPrice', '<=', $maxPrice);
+				});
+			}
+		}
+		// filter by on_sale
 		if ($onSale) {
 			// check if price discount is greater than 0 and discountedUntil is in the future
 			$products = $products->whereHas('prices', function ($query) {
@@ -46,6 +72,8 @@ class ProductController extends Controller
             'types' => ProductType::all(),
             'productType' => $productType,
 			'onSale' => $onSale,
+			'minPrice' => $minPrice,
+			'maxPrice' => $maxPrice,
         ]);
     }
 
