@@ -11,7 +11,9 @@ import {Inertia} from "@inertiajs/inertia";
 
 defineProps({
     products: Object,
-    types: Object,
+	types: Object,
+    productType: Object,
+	onSale: String,
 });
 
 const ad = ref(true);
@@ -20,17 +22,6 @@ function resetForm() {
 	document.getElementById('filters-form').reset();
 	return Inertia.get(route('produits.index'));
 }
-
-console.log(document.querySelector('.type-1'));
-
-// get route params
-const params = new URLSearchParams(window.location.search);
-const searchTypes = params.getAll('types[]');
-console.log(searchTypes);
-searchTypes.forEach((type) => {
-	console.log(type);
-	console.log(document.getElementById('type-' + type));
-});
 </script>
 
 <template>
@@ -57,7 +48,7 @@ searchTypes.forEach((type) => {
 								<div class="flex flex-col h-[190px] overflow-y-auto w-full custom-scrollbar">
 									<div class="flex items-center space-x-4 w-full" v-for="type in types">
 										<label class="flex items-center mb-1" :for="'type-' + type.id">
-											<Checkbox name="types[]" :value="type.id" :id="'type-' + type.id" class="border-2 focus:ring-0" />
+											<Checkbox name="types[]" :value="type.id" id="type-1" :checked="productType.includes(String(type.id))" class="border-2 focus:ring-0" />
 											<span class="ml-4 text-slate-700 font-medium truncate w-full">{{ type.name }}</span>
 										</label>
 									</div>
@@ -71,36 +62,11 @@ searchTypes.forEach((type) => {
 										</h3>
 									</div>
 								</div>
-								<div class="flex flex-col w-full">
-									<div class="flex items-center space-x-4 w-full">
-										<label class="flex items-center mb-1">
-											<Checkbox name="prices[]" class="border-2 focus:ring-0" />
-											<span class="ml-4 text-slate-700 font-medium truncate w-full">Moins de 10€</span>
-										</label>
-									</div>
-									<div class="flex items-center space-x-4 w-full">
-										<label class="flex items-center mb-1">
-											<Checkbox name="prices[]" class="border-2 focus:ring-0" />
-											<span class="ml-4 text-slate-700 font-medium truncate w-full">Entre 10 et 50€</span>
-										</label>
-									</div>
-									<div class="flex items-center space-x-4 w-full">
-										<label class="flex items-center mb-1">
-											<Checkbox name="prices[]" class="border-2 focus:ring-0" />
-											<span class="ml-4 text-slate-700 font-medium truncate w-full">Entre 50 et 100€</span>
-										</label>
-									</div>
-									<div class="flex items-center space-x-4 w-full">
-										<label class="flex items-center">
-											<Checkbox name="prices[]" class="border-2 focus:ring-0" />
-											<span class="ml-4 text-slate-700 font-medium truncate w-full">Plus de 100€</span>
-										</label>
-									</div>
-								</div>
+								<div class="flex flex-col w-full"></div>
 							</div>-->
 							<div class="flex items-center space-x-4 w-full">
 								<label class="flex items-center">
-									<Checkbox name="on_sale" class="border-2 focus:ring-0" />
+									<Checkbox name="on_sale" id="on_sale" class="border-2 focus:ring-0" :checked="onSale === 'on'" />
 									<span class="ml-4 text-slate-700 font-medium truncate w-full">Uniquement les produits en promotion</span>
 								</label>
 							</div>
