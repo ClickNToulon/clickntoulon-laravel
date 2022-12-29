@@ -4,16 +4,23 @@ import Navbar from '@/Components/Navigation/Navbar.vue';
 import Footer from '@/Components/Navigation/Footer.vue';
 import PrimaryButton from "@/Components/Button/PrimaryButton.vue";
 import {Inertia} from "@inertiajs/inertia";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
 
 defineProps({
     product: Object,
 });
 
-function isInTheFuture(date) {
-	if (date === null) {
-		return true;
+function checkDates(date, toDate) {
+	if (toDate === null) {
+		return dayjs(dayjs()).isAfter(date);
 	}
-	return new Date(date) > new Date();
+	// check if today is between date and toDate
+	return dayjs(dayjs()).isBetween(date, toDate, null, '[]');
 }
 
 function addProduct(id) {
@@ -28,9 +35,7 @@ function addProduct(id) {
 </script>
 
 <template>
-    <Head :title="`${$page.props.product.name} - Simpl'Achat`">
-        <title>{{$page.props.product.name}} - Simpl'Achat</title>
-    </Head>
+    <Head :title="`${$page.props.product.name} - Simpl'Achat`"/>
     <Navbar />
     <section class="wrap mx-auto pl-3 px-4 sm:px-8 md:px-16 lg:px-32 1.5xl:px-42 pt-10">
         <!-- Produit detail section -->
@@ -113,9 +118,9 @@ function addProduct(id) {
                             <span class="font-bold text-slate-700">A</span>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-8 !mt-8">
+                    <div class="flex items-start !mt-8">
                         <div v-for="price in product.prices">
-                            <div v-if="price.discount !== null && isInTheFuture(price.discountedUntil)" class="flex flex-col space-y-2">
+                            <div v-if="price.discount !== null && checkDates(price.discountedFrom, price.discountedUntil)" class="flex flex-col space-y-2">
                                 <div class="space-x-4 flex items-center">
                                     <p class="text-3xl font-bold tracking-wide">
                                         {{ price.discountedPrice }}€
@@ -141,13 +146,13 @@ function addProduct(id) {
                                     </p>
                                 </div>
                             </div>
-                            <div v-else>
+                            <div v-else-if="price === product.prices[(product.prices).length - 1]">
                                 <p class="font-bold text-2xl text-slate-900">
                                     {{ price.unitPrice }}€
                                 </p>
                             </div>
                         </div>
-						<PrimaryButton @click="addProduct(product.id)" class="w-full max-w-sm">
+						<PrimaryButton @click="addProduct(product.id)" class="ml-8">
 							Ajouter au panier
 						</PrimaryButton>
                     </div>
