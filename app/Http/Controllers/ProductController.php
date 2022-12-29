@@ -25,7 +25,10 @@ class ProductController extends Controller
             $products = $products->where('name', 'like', '%' . $search . '%');
         }
 		// filter by type
-		$productType = request('types');
+		$productType = request('types') ?? [];
+		if ($productType) {
+			$products = $products->whereIn('type_id', $productType);
+		}
 		if ($productType) {
 			$products = $products->whereIn('type_id', $productType);
 		}
@@ -42,6 +45,7 @@ class ProductController extends Controller
             'products' => $products,
             'types' => ProductType::all(),
             'productType' => $productType,
+			'onSale' => $onSale,
         ]);
     }
 
