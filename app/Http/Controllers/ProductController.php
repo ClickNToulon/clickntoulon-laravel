@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductType;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,40 +18,62 @@ class ProductController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        $products = Product::with('productType', 'price', 'shop');
-        $search = request('search');
+        $products = Product::with('type', 'shop', 'prices');
+        // filter by name
+		$search = request('search');
         if ($search) {
             $products = $products->where('name', 'like', '%' . $search . '%');
         }
-        $productType = request('types');
-        if ($productType) {
-            $products = $products->where('product_type_id', $productType);
-        }
-        // check if on sales
-        $onSale = request('on_sale');
-        if ($onSale) {
-            $products = $products->whereHas('price', function ($query) {
-                $query->where('product_prices.unitPriceDiscount', '>', 0);
-            });
-        }
-        // filter by min price
-        $minPrice = request('min_price');
-        if ($minPrice) {
-            $products = $products->whereHas('price', function ($query) use ($minPrice) {
-                $query->where('product_prices.unitPrice', '>=', $minPrice);
-            });
-        }
-        // filter by max price
-        $maxPrice = request('max_price');
-        if ($maxPrice) {
-            $products = $products->whereHas('price', function ($query) use ($maxPrice) {
-                $query->where('product_prices.unitPrice', '<=', $maxPrice);
-            });
-        }
+		// filter by type
+		$productType = request('types') ?? [];
+		if ($productType) {
+			$products = $products->whereIn('type_id', $productType);
+		}
+		if ($productType) {
+			$products = $products->whereIn('type_id', $productType);
+		}
+		// filter by min price
+		$onSale = request('on_sale');
+		$minPrice = request('min_price');
+		if ($minPrice) {
+			if ($onSale) {
+				$products = $products->whereHas('prices', function ($query) use ($minPrice) {
+					$query->where('discountedPrice', '>=', $minPrice);
+				});
+			} else {
+				$products = $products->whereHas('prices', function ($query) use ($minPrice) {
+					$query->where('unitPrice', '>=', $minPrice);
+				});
+			}
+		}
+		// filter by max price
+		$maxPrice = request('max_price');
+		if ($maxPrice) {
+			if ($onSale) {
+				$products = $products->whereHas('prices', function ($query) use ($maxPrice) {
+					$query->where('discountedPrice', '<=', $maxPrice);
+				});
+			} else {
+				$products = $products->whereHas('prices', function ($query) use ($maxPrice) {
+					$query->where('unitPrice', '<=', $maxPrice);
+				});
+			}
+		}
+		// filter by on_sale
+		if ($onSale) {
+			// check if price discount is greater than 0 and discountedUntil is in the future
+			$products = $products->whereHas('prices', function ($query) {
+				$query->where('discount', '>', 0)->where('discountedUntil', '>', now());
+			});
+		}
+        $products = $products->paginate(12);
         return Inertia::render('Products/Index', [
-            'products' => $products->paginate(12),
+            'products' => $products,
             'types' => ProductType::all(),
             'productType' => $productType,
+			'onSale' => $onSale,
+			'minPrice' => $minPrice,
+			'maxPrice' => $maxPrice,
         ]);
     }
 
@@ -60,7 +84,7 @@ class ProductController extends Controller
      */
     public function search(): \Inertia\Response
     {
-        $products = Product::with('productType', 'price');
+        $products = Product::with('type', 'price');
         if(\request('search')) {
             $products = $products->where('name', 'like', '%' . \request('search') . '%');
         }
@@ -100,11 +124,14 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function show(Product $product)
+    public function show(int $id): \Inertia\Response
     {
-        //
+        $product = Product::with('type', 'prices', 'shop')->findOrFail($id);
+        return Inertia::render('Products/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**

@@ -23,7 +23,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->userName(),
             'description' => fake()->text(),
-            'product_type_id' => ProductType::factory(),
+            'type_id' => ProductType::factory(),
             'shop_id' => Shop::factory(),
             'image' => fake()->imageUrl(),
         ];

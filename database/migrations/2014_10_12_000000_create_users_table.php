@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -21,9 +21,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('phone', false, true)->nullable();
-            $table->text('address')->nullable();
-            $table->string('city', 255)->nullable();
-            $table->string('postalCode', 5)->nullable();
             $table->boolean('isBanned')->default(false);
             $table->boolean('isVerified')->default(false);
             $table->rememberToken();
@@ -36,7 +33,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('users');
     }

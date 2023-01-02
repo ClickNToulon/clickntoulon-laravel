@@ -17,7 +17,7 @@ class ProductTypeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->userName(),
+            'name' => fake()->name(),
         ];
     }
 }

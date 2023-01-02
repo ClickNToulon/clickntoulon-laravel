@@ -2,8 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Shop;
+use App\Models\ProductType;
+use App\Models\Order;
+use App\Models\ProductPrice;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a Product model. A Product display the attributes of the real object.
@@ -16,14 +25,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int $id
  * @property string $name
  * @property string $image
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Database\Eloquent\Relations\BelongsToMany $orders
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $productType
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $price
- * @property \Illuminate\Database\Eloquent\Relations\BelongsTo $shop
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property BelongsToMany $orders
+ * @property BelongsTo $productType
+ * @property BelongsTo $price
+ * @property BelongsTo $shop
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class Product extends Model
 {
@@ -36,46 +45,54 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'description',
         'image',
+        'shop',
+        'type',
+        'size',
+        'color',
+        'quantity'
     ];
 
     /**
-     * Returns the orders that buy this product.
+     * The attributes that should be cast.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @var array<int, string>
      */
-    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the shop that owns the product.
+     */
+    public function shop(): BelongsTo
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsTo(Shop::class);
     }
 
     /**
-     * Returns the price of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Get the type that owns the product.
      */
-    public function price(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(ProductPrice::class);
-    }
-
-    /**
-     * Returns the type of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function productType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(ProductType::class);
     }
 
     /**
-     * Returns the shop of this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the orders for the product.
      */
-    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function orders(): BelongsToMany
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsToMany(Order::class);
+    }
+
+    /**
+     * Get the prices for the product.
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(ProductPrice::class);
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * Defines a ProductPrice model. A productPrice is a set of prices and characteristics of a product.
@@ -17,14 +20,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property-read int $id
  * @property float $unitPrice
- * @property float $unitPriceDiscount
+ * @property float $discount
+ * @property float $discountedPrice
  * @property float $vat
- * @property \Illuminate\Support\Carbon $start_date
- * @property \Illuminate\Support\Carbon $end_date
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property float $vatPrice
+ * @property Carbon $discountedFrom
+ * @property Carbon $discountedUntil
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin Builder
  */
 class ProductPrice extends Model
 {
@@ -37,17 +42,28 @@ class ProductPrice extends Model
      */
     protected $fillable = [
         'unitPrice',
+        'discount',
+        'discountedPrice',
         'vat',
-        'start_date',
-        'end_date'
+        'vatPrice',
+        'discountedFrom',
+        'discountedUntil'
     ];
 
     /**
-     * Returns the product that has this price.
+     * The attributes that should be cast.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @var array<int, string>
      */
-    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    /**
+     * Get the product that owns the price.
+     */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

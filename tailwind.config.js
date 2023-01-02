@@ -16,27 +16,29 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            screens: {
+                '1.5xl': '1440px',
+                '2.5xl': '1760px',
+            },
             colors: {
-                azure: {
-                    DEFAULT: "#3185FC",
-                    50: "#9AC4FE",
-                    100: "#85B8FE",
-                    200: "#72ACFE",
-                    300: "#5EA0FD",
-                    400: "#4A94FC",
-                    500: "#3185FC",
-                    600: "#227DFC",
-                    700: "#0E71FB",
-                    800: "#0467F1",
-                    900: "#035EDD",
-                },
                 success: "#57A773",
                 warning: "#FFCF56",
                 danger: "#DD1C1A",
-                lightgrey: "#F5F5FA"
+                lightgrey: "#F5F5FA",
+                darkblue: "#232f3e",
+                primeblue: "#519CC7",
+                lightorange: "#FAC552",
+                darkorange: "#F26D21",
+                primaryblack: "#555555",
+                textblack: "#28333E",
+                lightgray: "#EAEDED",
             }
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/typography'),
+    ],
 };

@@ -1,8 +1,8 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Form/InputError.vue';
+import InputLabel from '@/Components/Form/InputLabel.vue';
+import PrimaryButton from '@/Components/Button/PrimaryButton.vue';
+import TextInput from "@/Components/Form/TextInput.vue";
 import { useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
@@ -36,13 +36,13 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Update Password</h2>
-            <p class="mt-1 text-sm text-gray-600">Ensure your account is using a long, random password to stay secure.</p>
+            <h2 class="text-xl font-medium text-textblack">Modifiez votre mot de passe</h2>
+            <p class="mt-1 text-gray-700">Assurez vous d'avoir un mot de passe long, robuste et unique.</p>
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="current_password" value="Current Password" />
+                <InputLabel for="current_password" value="Mot de passe actuel" />
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
@@ -55,7 +55,7 @@ const updatePassword = () => {
             </div>
 
             <div>
-                <InputLabel for="password" value="New Password" />
+                <InputLabel for="password" value="Nouveau mot de passe" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
@@ -68,7 +68,7 @@ const updatePassword = () => {
             </div>
 
             <div>
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmez le mot de passe" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -80,9 +80,12 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
-                <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
+                <PrimaryButton :disabled="form.processing">Sauvegarder le nouveau mot de passe</PrimaryButton>
+                <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition duration-[5000ms] ease-in-out">
+                    <p v-if="form.recentlySuccessful"
+                       class="outline-none max-w-fit flex items-center space-x-2 rounded-full px-3 py-1.5 bg-green-200 text-green-900 font-bold">
+                        Sauvegardé.
+                    </p>
                 </Transition>
             </div>
         </form>
