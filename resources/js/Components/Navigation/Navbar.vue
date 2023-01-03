@@ -53,11 +53,16 @@
                         <div v-if="$page.props.auth.user" class="flex">
                             <Dropdown align="right" width="48">
                                 <template #trigger>
-                                    <button type="button" class="flex items-center font-semibold focus:outline-none space-x-2 rounded-full px-3 py-1.5 hover:bg-lightorange focus:bg-lightorange focus:text-slate-900 hover:text-slate-900 transition duration-200 ease-in-out">
+                                    <button type="button" class="flex items-center font-semibold focus:outline-none rounded-full px-3 py-1.5 hover:bg-lightorange focus:bg-lightorange focus:text-slate-900 hover:text-slate-900 transition duration-200 ease-in-out">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
-                                        {{ $page.props.auth.user.surname }} {{ $page.props.auth.user.name }}
+                                        <span v-if="$page.props.auth.user.full_name">
+											{{ $page.props.auth.user.full_name }}
+										</span>
+										<span v-else>
+											{{ $page.props.auth.user.surname }} {{ $page.props.auth.user.name }}
+										</span>
                                         <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
@@ -77,12 +82,18 @@
                                         </svg>
                                         Mes commandes
                                     </DropdownLink>
-                                    <DropdownLink :href="route('logout')" method="post" as="button">
+                                    <DropdownLink v-if="$page.props.auth.guard === 'web'" :href="route('logout')" method="post" as="button">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                                         </svg>
                                         Déconnexion
                                     </DropdownLink>
+									<DropdownLink v-else :href="route('employee.logout')" method="post" as="button">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+											<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+										</svg>
+										Déconnexion
+									</DropdownLink>
                                 </template>
                             </Dropdown>
                         </div>

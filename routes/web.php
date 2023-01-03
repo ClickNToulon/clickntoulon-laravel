@@ -8,7 +8,6 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
-use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -89,5 +88,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mon-compte', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	Route::get('/mon-compte/commandes', [ProfileController::class, 'orders'])->name('profile.orders');
 });
+
+Route::get('/employee', function () {
+	return Inertia::render('Employee', [
+		'guard' => Auth()->user(),
+	]);
+})->name('employee.home')->middleware(['auth:employee', 'verified']);
 
 require __DIR__.'/auth.php';

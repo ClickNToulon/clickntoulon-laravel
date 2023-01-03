@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\EmployeeAuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -32,6 +33,11 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.reset');
+
+	Route::get('/employee/login', [EmployeeAuthenticatedSessionController::class, 'createEmployee'])
+				->name('employee.login');
+
+	Route::post('/employee/login', [EmployeeAuthenticatedSessionController::class, 'storeEmployee']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -53,4 +59,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+});
+
+Route::middleware('auth:employee')->group(function () {
+	Route::post('/employee/logout', [EmployeeAuthenticatedSessionController::class, 'destroyEmployee'])
+				->name('employee.logout');
 });
